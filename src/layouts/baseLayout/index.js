@@ -12,13 +12,13 @@ export default (props) => {
       </Header>
       <Layout>
         <SideBar {...props}/>
-        <Layout style={{ padding: '0 24px 24px'}}>
+        <Layout style={{ padding: '0 24px 24px', minHeight: 'auto'}}>
           <Bread {...props}/>
           <Content
             style={{
               padding: 24,
               margin: 0,
-              minHeight: 280,
+              minHeight: 'auto',
               backgroundColor: pathname === '/document/new' ? '#2c2c2c' : '#fff'
             }}
           >

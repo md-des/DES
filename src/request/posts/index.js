@@ -13,7 +13,15 @@ const createPost = ({ params }) => {
     data: params
   });
 };
+const getPostDetail = ({ params }) => {
+  return ajax({
+    url: "api/posts/getPost",
+    method: "get",
+    params
+  });
+};
 export default {
   getList,
-  createPost
+  createPost,
+  getPostDetail
 };
