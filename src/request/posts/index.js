@@ -1,14 +1,7 @@
 import ajax from "../common";
 const getList = ({ params }) => {
   return ajax({
-    url: "api/news/toutiao",
-    method: "get",
-    params
-  });
-};
-const updateList = ({ params }) => {
-  return ajax({
-    url: "api/news/toutiao/index",
+    url: "api/posts/list",
     method: "get",
     params
   });
@@ -22,6 +15,5 @@ const createPost = ({ params }) => {
 };
 export default {
   getList,
-  updateList,
   createPost
 };

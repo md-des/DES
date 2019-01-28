@@ -14,6 +14,7 @@ export default class NewPost extends Component {
     const { title, content } = this.state;
     posts.createPost({
       params: {
+        author: '5c4a6b17c81cb7496c3570f4',
         title,
         content,
       },

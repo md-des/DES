@@ -1,6 +1,10 @@
 var path = require('path')
 export default {
   treeShaking: true,
+  define: {
+    "process.env.host": 'localhost',
+    "process.env.port": 9000,
+  },
   plugins: [
     [
       'umi-plugin-react',

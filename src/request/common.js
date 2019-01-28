@@ -1,10 +1,8 @@
 import axios from 'axios';
 import {message} from 'antd';
-const HOST = 'http://localhost';
-const PORT = '8001/'
 export default function(opt) {
   if (opt) {
-    opt.url = HOST + ':' + PORT + opt.url;
+    opt.url = "http://" + process.env.host + ':' + process.env.port + "/" + opt.url;
     return axios(opt).then((res) => {
       if (res && res.data && res.data.code === 2000) {
         message.error(res.data.msg)
