@@ -1,9 +1,7 @@
-// ref: https://umijs.org/config/
 var path = require('path')
 export default {
   treeShaking: true,
   plugins: [
-    // ref: https://umijs.org/plugin/umi-plugin-react.html
     [
       'umi-plugin-react',
       {
@@ -18,8 +16,16 @@ export default {
       },
     ],
   ],
+  proxy: {
+    "/api": {
+      "target": "http://localhost:3055",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api" : "" }
+    }
+  },
   alias: {
     components: path.join(__dirname, './src/components'),
+    request: path.join(__dirname, './src/request'),
   },
   extraBabelPresets: [],
 };

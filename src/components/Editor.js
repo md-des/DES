@@ -11,7 +11,7 @@ export default class Editor extends Component {
     this.openIframe();
     // Listen to StackEdit events and apply the changes to the textarea.
     stackedit.on('fileChange', file => {
-      console.log('in', file.content.text)
+      this.props.getContent(file.content.text)
       el.value = file.content.text;
     });
     stackedit.on('close', () => {
