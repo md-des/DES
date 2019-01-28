@@ -41,6 +41,7 @@ export default class MyDoc extends Component {
           <div
             style={{
               width: '200px',
+              minWidth: '200px',
               borderRight: '1px solid #eee',
               paddingRight: '20px',
               cursor: 'pointer',
@@ -56,7 +57,7 @@ export default class MyDoc extends Component {
               )}
             />
           </div>
-          <div style={{ width: '100%', marginLeft: '40px' }}>
+          <div style={{width: '100%', marginLeft: '40px', maxWidth: '800px'}}>
             <EditorOverview content={content} />
           </div>
         </div>
