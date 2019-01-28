@@ -1,4 +1,3 @@
-import Link from 'umi/link';
 import React, { Component } from 'react';
 import { List } from 'antd';
 import { posts } from 'request';
@@ -13,9 +12,11 @@ export default class MyDoc extends Component {
         },
       })
       .then(req => {
-        this.setState({
-          list: req.data.docs,
-        });
+        if (req) {
+          this.setState({
+            list: req.data.docs,
+          });
+        }
       });
   }
   getPostDetail = id => {
@@ -26,10 +27,12 @@ export default class MyDoc extends Component {
         },
       })
       .then(req => {
-        const { data: { detail = '' } = {} } = req;
-        this.setState({
-          content: detail.content,
-        });
+        if (req) {
+          const {data: {detail = ''} = {}} = req;
+          this.setState({
+            content: detail.content,
+          });
+        }
       });
   };
   render() {

@@ -15,7 +15,7 @@ export default class Editor extends Component {
       el.value = file.content.text;
     });
     stackedit.on('close', () => {
-      console.log('close', el.value)
+      // console.log('close', el.value)
     });
   }
   componentWillUnmount() {
