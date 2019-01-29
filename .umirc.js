@@ -31,6 +31,7 @@ export default {
     components: path.join(__dirname, './src/components'),
     request: path.join(__dirname, './src/request'),
     static: path.join(__dirname, './src/static'),
+    utils: path.join(__dirname, './src/utils'),
   },
   extraBabelPresets: [],
 };

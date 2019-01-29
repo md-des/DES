@@ -3,10 +3,23 @@ import router from 'umi/router';
 import React, { Component } from 'react';
 import style from './login.less';
 import {Form, Icon, Input, Button, Checkbox} from 'antd';
-const img = require('static/images/logo.jpg')
+import kit from 'utils/kit.js'
+const {encryptDES} = kit;
+const img = require('static/images/logo.jpg');
 class Login extends Component {
-  submit = () => {
-    router.push('/document/my')
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+      }
+      console.log(values, 'values')
+      const key = Math.random().toString(36).substr(2);
+      const pass = encryptDES(values.password, key);
+      console.log(pass, 'ppppp')
+      router.push('/document/my')
+
+    });
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -44,7 +57,7 @@ class Login extends Component {
                 initialValue: true,
               })(<Checkbox>Remember me</Checkbox>)}
               <br/>
-              <Button type="primary" onClick={this.submit} htmlType="submit" className={style.loginBtn + " login-form-button"}>
+              <Button type="primary" htmlType="submit" className={style.loginBtn + " login-form-button"}>
                 Log in
               </Button>
               Or <a href="">register now!</a>

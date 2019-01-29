@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import Login from './login';
-require('./editor.css');
+require('static/css/editor.css');
 
 export default class Main extends Component {
   render() {
