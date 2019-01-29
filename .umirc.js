@@ -22,7 +22,7 @@ export default {
   ],
   proxy: {
     "/api": {
-      "target": "http://localhost:3055",
+      "target": "http://127.0.0.1:3055",
       "changeOrigin": true,
       "pathRewrite": { "^/api" : "" }
     }
@@ -30,6 +30,7 @@ export default {
   alias: {
     components: path.join(__dirname, './src/components'),
     request: path.join(__dirname, './src/request'),
+    static: path.join(__dirname, './src/static'),
   },
   extraBabelPresets: [],
 };
