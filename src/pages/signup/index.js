@@ -1,36 +1,43 @@
 import Link from 'umi/link';
 import router from 'umi/router';
 import React, { Component } from 'react';
-import style from './login.less';
-import {Form, Icon, Input, Button, Checkbox, message} from 'antd';
+import style from './signup.less';
+import {Form, Icon, Input, Button, message} from 'antd';
 import kit from 'utils/kit.js'
 import { user } from 'request';
 const {encryptDES} = kit;
 const img = require('static/images/logo.jpg');
-class Login extends Component {
+class Signup extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
       }
+      console.log(values, 'values')
       const {userName, password} = values;
       const key = 'DES';
       const pass = encryptDES(password, key);
-      user.loginIn({
+      user.signup({
         params: {
           name: userName,
           pass
         }
       }).then(req => {
         if (req.code === 1000) {
-          const {userId} = req.data;
-          message.success('登录成功！');
-          router.push('/document/my');
-          localStorage.setItem('userId', userId);
+          message.success('注册成功！');
+          router.push('/login')
         }
       })
     });
+  }
+  compareToFirstPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && value !== form.getFieldValue('password')) {
+      callback('两次输入密码不一致！');
+    } else {
+      callback();
+    }
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -63,15 +70,24 @@ class Login extends Component {
               )}
             </Form.Item>
             <Form.Item>
-              {getFieldDecorator('remember', {
-                valuePropName: 'checked',
-                initialValue: true,
-              })(<Checkbox>Remember me</Checkbox>)}
-              <br/>
+              {getFieldDecorator('passwordConfirm', {
+                rules: [
+                  {required: true, message: 'Please confirm your password!'},
+                  {validator: this.compareToFirstPassword}
+                ]
+              })(
+                <Input
+                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  type="password"
+                  placeholder="confirm your password!"
+                />
+              )}
+            </Form.Item>
+            <Form.Item>
               <Button type="primary" htmlType="submit" className={style.loginBtn + " login-form-button"}>
-                Log in
+                Sign Up
               </Button>
-              Or <Link to="/signup" style={{color: 'rgb(49, 48, 56)'}}>register now!</Link>
+              <Link to="/login" style={{color: 'rgb(49, 48, 56)'}}>To log in</Link>
             </Form.Item>
           </Form>
         </div>
@@ -79,5 +95,5 @@ class Login extends Component {
     );
   }
 }
-const LoginForm = Form.create({name: 'normal_login'})(Login);
-export default LoginForm;
+const SignupForm = Form.create({name: 'normal_signup'})(Signup);
+export default SignupForm;

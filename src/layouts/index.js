@@ -6,7 +6,7 @@ function BasicLayout(props) {
     ...props,
     sideList,
   };
-  if (props.location.pathname === '/login') {
+  if (props.location.pathname === '/login' || props.location.pathname === '/signup') {
     return <LoginLayout>{props.children}</LoginLayout>;
   }
   return <BaseLayout {...newProps}>{props.children}</BaseLayout>;

@@ -5,14 +5,15 @@ import EditorOverview from 'components/EditorOverview';
 export default class MyDoc extends Component {
   state = {};
   componentDidMount() {
+    const userId = localStorage.getItem('userId')
     posts
       .getList({
         params: {
-          author: '5c4a6b17c81cb7496c3570f4',
+          author: userId,
         },
       })
       .then(req => {
-        if (req) {
+        if (req && req.data) {
           this.setState({
             list: req.data.docs,
           });
