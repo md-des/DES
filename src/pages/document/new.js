@@ -11,25 +11,27 @@ export default class NewPost extends Component {
     });
   };
   savePost = () => {
-    const {title, content} = this.state;
-    const userId = JSON.parse(localStorage.getItem('user'))._id
-    posts.createPost({
-      params: {
-        author: userId,
-        title,
-        content,
-      },
-    }).then((req) => {
-      if (req.code === 1000) {
-        message.success('新建成功！')
-      }
+    const { title, content } = this.state;
+    const userId = JSON.parse(localStorage.getItem('user'))._id;
+    posts
+      .createPost({
+        params: {
+          author: userId,
+          title,
+          content,
+        },
+      })
+      .then(req => {
+        if (req.code === 1000) {
+          message.success('新建成功！');
+        }
+      });
+  };
+  getContent = content => {
+    this.setState({
+      content,
     });
   };
-  getContent = (content) => {
-    this.setState({
-      content
-    })
-  }
   render() {
     const { title } = this.state;
     return (
@@ -41,7 +43,10 @@ export default class NewPost extends Component {
             保存
           </Button>
         </div>
-        <Editor getContent={this.getContent} />
+        <Editor
+          getContent={this.getContent}
+          style={{ top: '180px', left: '212px', right: '12px', backgroundColor: 'rgba(0,0,0,0)' }}
+        />
       </div>
     );
   }

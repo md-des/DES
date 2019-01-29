@@ -20,8 +20,16 @@ const getPostDetail = ({ params }) => {
     params
   });
 };
+const updatePost = ({ params }) => {
+  return ajax({
+    url: "api/posts/update",
+    method: "post",
+    data: params
+  });
+};
 export default {
   getList,
   createPost,
-  getPostDetail
+  getPostDetail,
+  updatePost
 };

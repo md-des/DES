@@ -22,21 +22,23 @@ export default class Editor extends Component {
     this.closeIframe()
   }
   openIframe = () => {
+    const {style: {top, left, right, backgroundColor}, defaultValue} = this.props;
     // Open the iframe
+    console.log(defaultValue, 'defaultValue')
     this.stackedit.openFile({
       name: 'editor', // with an optional filename
       content: {
-        text: this.el.value, // and the Markdown content.
+        text: defaultValue || this.el.value, // and the Markdown content.
       },
     });
     const container = document.getElementsByClassName('stackedit-container')[0];
     // const iframe = document.getElementsByClassName('stackedit-iframe')[0];
     const colseBtn = document.getElementsByClassName('navigation-bar__button')[0];
     if (container) {
-      container.style.top = '180px';
-      container.style.left = '212px';
-      container.style.right = '12px';
-      container.style.backgroundColor = 'rgba(0,0,0,0)';
+      container.style.top = top;
+      container.style.left = left;
+      container.style.right = right;
+      container.style.backgroundColor = backgroundColor;
     }
     // console.log(iframe.contentWindow, 'frame')
     // const iframeDocument = iframe.contentWindow.document;
