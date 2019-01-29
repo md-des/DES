@@ -12,7 +12,7 @@ export default class NewPost extends Component {
   };
   savePost = () => {
     const {title, content} = this.state;
-    const userId = localStorage.getItem('userId')
+    const userId = JSON.parse(localStorage.getItem('user'))._id
     posts.createPost({
       params: {
         author: userId,

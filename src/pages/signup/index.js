@@ -45,7 +45,7 @@ class Signup extends Component {
       <div>
         <div className={style.loginPanel}>
           <div className={style.logoContainer}>
-            <img src={img} alt="" style={{width: '60px', height: '60px'}}/>
+            <img src={img} alt="" className={style.logo}/>
           </div>
           <Form onSubmit={this.handleSubmit} className={style.form + ' login-form'}>
             <Form.Item>

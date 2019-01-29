@@ -5,7 +5,7 @@ import EditorOverview from 'components/EditorOverview';
 export default class MyDoc extends Component {
   state = {};
   componentDidMount() {
-    const userId = localStorage.getItem('userId')
+    const userId = JSON.parse(localStorage.getItem('user'))._id;
     posts
       .getList({
         params: {
@@ -29,7 +29,7 @@ export default class MyDoc extends Component {
       })
       .then(req => {
         if (req) {
-          const {data: {detail = ''} = {}} = req;
+          const { data: { detail = '' } = {} } = req;
           this.setState({
             content: detail.content,
           });
@@ -61,7 +61,8 @@ export default class MyDoc extends Component {
               )}
             />
           </div>
-          <div style={{width: '100%', marginLeft: '40px', maxWidth: '800px'}}>
+
+          <div style={{ width: '100%', marginLeft: '40px', maxWidth: '800px' }}>
             <EditorOverview content={content} />
           </div>
         </div>
