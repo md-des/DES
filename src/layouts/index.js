@@ -1,6 +1,7 @@
 import LoginLayout from './loginLayout/index';
 import BaseLayout from './baseLayout/index';
-import {sideList} from './sideList'
+import {sideList} from './sideList';
+import router from 'umi/router';
 function BasicLayout(props) {
   const newProps = {
     ...props,
@@ -8,6 +9,9 @@ function BasicLayout(props) {
   };
   if (props.location.pathname === '/login' || props.location.pathname === '/signup') {
     return <LoginLayout>{props.children}</LoginLayout>;
+  }
+  if (props.location.pathname === '/') {
+    router.push('/login');
   }
   return <BaseLayout {...newProps}>{props.children}</BaseLayout>;
 }

@@ -24,12 +24,13 @@ export default class Editor extends Component {
   openIframe = () => {
     // Open the iframe
     this.stackedit.openFile({
-      name: 'Filename', // with an optional filename
+      name: 'editor', // with an optional filename
       content: {
         text: this.el.value, // and the Markdown content.
       },
     });
     const container = document.getElementsByClassName('stackedit-container')[0];
+    // const iframe = document.getElementsByClassName('stackedit-iframe')[0];
     const colseBtn = document.getElementsByClassName('navigation-bar__button')[0];
     if (container) {
       container.style.top = '180px';
@@ -37,6 +38,10 @@ export default class Editor extends Component {
       container.style.right = '12px';
       container.style.backgroundColor = 'rgba(0,0,0,0)';
     }
+    // console.log(iframe.contentWindow, 'frame')
+    // const iframeDocument = iframe.contentWindow.document;
+    // const nav = iframeDocument.getElementsByTagName('nav')
+    // console.log(iframeDocument, 'iframeDocument')
     if (colseBtn) {
       colseBtn.style.display = 'none'
     }

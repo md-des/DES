@@ -23,7 +23,7 @@ class Login extends Component {
           pass
         }
       }).then(req => {
-        if (req.code === 1000) {
+        if (req && req.code === 1000) {
           const {userId} = req.data;
           message.success('登录成功！');
           router.push('/document/my');
