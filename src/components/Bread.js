@@ -19,6 +19,7 @@ export default props => {
             </Breadcrumb.Item>
           );
         }
+        return false
       })}
     </Breadcrumb>
   );

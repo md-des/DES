@@ -32,6 +32,7 @@ export default class MyDoc extends Component {
         if (req) {
           const { data: { detail = {} } = {} } = req;
           this.setState({
+            edit: false,
             content: detail.content,
             title: detail.title,
             _id: detail._id,
@@ -52,21 +53,29 @@ export default class MyDoc extends Component {
     this.setState({ title: val });
   };
   savePost = () => {
-    const {newContent, _id, title} = this.state;
-    posts.updatePost({
-      params: {
-        _id,
-        content: newContent,
-        title
-      }
-    }).then(req => {
-      if (req && req.code === 1000) {
-        message.success('修改成功！')
-      }
-    })
+    const { newContent, _id, title } = this.state;
+    posts
+      .updatePost({
+        params: {
+          _id,
+          content: newContent,
+          title,
+        },
+      })
+      .then(req => {
+        if (req && req.code === 1000) {
+          const {data: {content, title}} = req;
+          message.success('修改成功！');
+          this.setState({
+            edit: false,
+            title,
+            content
+          })
+        }
+      });
   };
   render() {
-    const { list, content, edit, title } = this.state;
+    const {list, content, edit, title} = this.state;
     return (
       <div>
         {/* <h2>我的文档</h2> */}
@@ -93,7 +102,7 @@ export default class MyDoc extends Component {
           {!edit && (
             <div style={{ width: '100%', marginLeft: '40px', maxWidth: '800px' }}>
               {content && <Button onClick={this.edit}>编辑</Button>}
-              <EditorOverview content={content} />
+              {content && <EditorOverview content={content} />}
             </div>
           )}
           {edit && (

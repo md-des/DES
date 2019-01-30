@@ -3,7 +3,7 @@ import Link from 'umi/link';
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 export default props => {
-  const { sideList, location: { pathname } = {} } = props;
+  const { sideList } = props;
   const loop = list => {
     return list.map((i, index) => {
       return (

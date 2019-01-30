@@ -24,7 +24,6 @@ export default class Editor extends Component {
   openIframe = () => {
     const {style: {top, left, right, backgroundColor}, defaultValue} = this.props;
     // Open the iframe
-    console.log(defaultValue, 'defaultValue')
     this.stackedit.openFile({
       name: 'editor', // with an optional filename
       content: {

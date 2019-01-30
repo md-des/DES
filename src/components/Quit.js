@@ -7,7 +7,6 @@ export default class extends Component {
     router.push('/login');
   };
   render() {
-    const { location: { pathname } = {}, sideList } = this.props;
     const menu = () => {
       return (
         <Menu>
