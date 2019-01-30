@@ -52,7 +52,7 @@ export default class Editor extends Component {
   }
   render() {
     return (
-      <div>
+      <div className={"stackedit_contener"}>
         <textarea style={{ display: 'none' }} id="stackedit" />
       </div>
     );

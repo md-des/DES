@@ -6,20 +6,23 @@ import Editor from 'components/Editor';
 export default class MyDoc extends Component {
   state = {};
   componentDidMount() {
+    this.getPostsList();
+  }
+  getPostsList = () => {
     const userId = JSON.parse(localStorage.getItem('user'))._id;
     posts
-      .getList({
-        params: {
-          author: userId,
-        },
-      })
-      .then(req => {
-        if (req && req.data) {
-          this.setState({
-            list: req.data.docs,
-          });
-        }
-      });
+    .getList({
+      params: {
+        author: userId,
+      },
+    })
+    .then(req => {
+      if (req && req.data) {
+        this.setState({
+          list: req.data.docs,
+        });
+      }
+    });
   }
   getPostDetail = id => {
     posts
@@ -70,12 +73,18 @@ export default class MyDoc extends Component {
             edit: false,
             title,
             content
-          })
+          });
+          this.getPostsList();
         }
       });
   };
   render() {
     const {list, content, edit, title} = this.state;
+    const iframeContainer = document.getElementsByClassName('stackedit-iframe-container')[0];
+    let width;
+    if (iframeContainer) {
+      width = iframeContainer.offsetWidth;
+    }
     return (
       <div>
         {/* <h2>我的文档</h2> */}
@@ -100,13 +109,13 @@ export default class MyDoc extends Component {
             />
           </div>
           {!edit && (
-            <div style={{ width: '100%', marginLeft: '40px', maxWidth: '800px' }}>
+            <div style={{ width: '100%', marginLeft: '40px', maxWidth: '1280px' }}>
               {content && <Button onClick={this.edit}>编辑</Button>}
               {content && <EditorOverview content={content} />}
             </div>
           )}
           {edit && (
-            <div style={{ width: '100%', height: '100%', backgroundColor: 'rgb(44, 44, 44)' }}>
+            <div style={{ width: width || '100%', height: '100%', backgroundColor: 'rgb(44, 44, 44)', maxWidth: '1280px' }}>
               <div
                 style={{ display: 'flex', height: '32px', lineHeight: '32px', margin: '30px 10px' }}
               >
@@ -121,7 +130,7 @@ export default class MyDoc extends Component {
                 defaultValue={content}
                 style={{
                   top: '219px',
-                  left: '438px',
+                  left: '448px',
                   right: '38px',
                   backgroundColor: 'rgba(0,0,0,0)',
                 }}

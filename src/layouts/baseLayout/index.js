@@ -41,7 +41,7 @@ export default props => {
               padding: 24,
               margin: 0,
               minHeight: 'auto',
-              backgroundColor: pathname === '/document/new' ? '#2c2c2c' : '#fff',
+              backgroundColor: '#fff',
             }}
           >
             {props.children}

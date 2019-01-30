@@ -6,3 +6,6 @@ html, body, #root {
 body {
   margin: 0;
 }
+.stackedit-iframe-container {
+  margin: 0 !important;
+}
