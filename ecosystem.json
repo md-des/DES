@@ -9,7 +9,7 @@
         "NODE_ENV": "production",
         "NODE_PATH": "./src",
         "PORT": 8888,
-        "APIHOST": "localhost",
+        "APIHOST": "140.143.90.177",
         "APIPORT": 3060
       }
     }
