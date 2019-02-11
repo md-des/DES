@@ -14,9 +14,10 @@ var proxyOption = {
 };
 // const server = new https.Server(credentials, app);
 app.listen(PORT || 8000, function () {
-  var host = app.address().address;
-  var port = app.address().port;
-  console.log('UHS-ADMIN app listening at http://%s:%s', host, port);
+  // var host = app.address().address;
+  // var port = app.address().port;
+  // console.log('UHS-ADMIN app listening at http://%s:%s', host, port);
+  console.log('DES app listening at http://%s:%s');
 });
 
 app.use(express.static(path.join(__dirname, 'dist')));
