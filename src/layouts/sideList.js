@@ -18,6 +18,16 @@ export const sideList = [
     ],
   },
   {
+    name: '项目',
+    path: '/project',
+    children: [
+      {
+        name: '所有项目',
+        path: '/project/all',
+      },
+    ],
+  },
+  {
     name: '设置',
     path: '/setting',
     children: [

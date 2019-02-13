@@ -40,7 +40,7 @@ class Login extends Component {
           <div className={style.logoContainer}>
             <img src={img} alt="" className={style.logo}/>
           </div>
-          <Form onSubmit={this.handleSubmit} className={style.form + ' login-form'}>
+          <Form  className={style.form + ' login-form'}>
             <Form.Item>
               {getFieldDecorator('userName', {
                 rules: [{ required: true, message: 'Please input your username!' }],
@@ -68,7 +68,7 @@ class Login extends Component {
                 initialValue: true,
               })(<Checkbox>Remember me</Checkbox>)}
               <br/>
-              <Button type="primary" htmlType="submit" className={style.loginBtn + " login-form-button"}>
+              <Button type="primary" onClick={this.handleSubmit} className={style.loginBtn + " login-form-button"}>
                 Log in
               </Button>
               Or <Link to="/signup" style={{color: 'rgb(49, 48, 56)'}}>register now!</Link>
