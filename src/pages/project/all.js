@@ -55,11 +55,12 @@ export default class AllProjects extends Component {
           key={m._id}
           title={m.group_name}
           className={style.card}
-          // actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+          actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
           extra={<span>创建者：{m.creator_name}</span>}
         >
-          {m.posts.map((p, idx) => {
-            return <p key={idx}>{p.title}</p>;
+          <p>成员：{m.members.length == 0 && '暂无'}</p>
+          {m.members.map((p, idx) => {
+            return <p key={idx}>{p.name}</p>;
           })}
         </Card>
       );
@@ -72,11 +73,12 @@ export default class AllProjects extends Component {
           title={m.group_name}
           key={m._id}
           className={style.card}
-          // actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+          actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
           extra={<span>创建者：{m.creator_name}</span>}
         >
-          {m.posts.map((p, idx) => {
-            return <p key={idx}>{p.title}</p>;
+          <p>成员：{m.members.length == 0 && '暂无'}</p>
+          {m.members.map((p, idx) => {
+            return <p key={idx}>{p.name}</p>;
           })}
         </Card>
       );
