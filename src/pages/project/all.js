@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { List, Button, Input, message, Card, Icon } from 'antd';
+import { Card, Icon } from 'antd';
 import { projects } from 'request';
 import style from './index.less';
-export default class AllProjects extends Component {
+import router from 'umi/router';
+import {connect} from 'dva';
+class AllProjects extends Component {
   state = {
     my: [],
     participant: [],
@@ -20,7 +22,6 @@ export default class AllProjects extends Component {
       })
       .then(req => {
         if (req && req.data) {
-          console.log(req.data, 'dddd');
           const { my, participant } = req.data;
           this.setState({
             my,
@@ -29,22 +30,26 @@ export default class AllProjects extends Component {
         }
       });
   };
-  getProjectDetail = id => {
+  getProjectDetail = _id => {
+    const {dispatch} = this.props;
     projects
-      .getPostDetail({
+      .getProjectsDetail({
         params: {
-          id,
+          _id,
         },
       })
       .then(req => {
         if (req) {
-          const { data: { detail = {} } = {} } = req;
-          this.setState({
-            edit: false,
-            content: detail.content,
-            title: detail.title,
-            _id: detail._id,
-          });
+          const {data} = req;
+          if (data) {
+            dispatch({
+              type: 'projects_all/updateState',
+              payload: {
+                detail: data
+              }
+            })
+            router.push('/project/detail');
+          }
         }
       });
   };
@@ -56,6 +61,7 @@ export default class AllProjects extends Component {
           title={m.group_name}
           className={style.card}
           actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+          onClick={() => this.getProjectDetail(m._id)}
           extra={<span>创建者：{m.creator_name}</span>}
         >
           <p>成员：{m.members.length == 0 && '暂无'}</p>
@@ -73,6 +79,7 @@ export default class AllProjects extends Component {
           title={m.group_name}
           key={m._id}
           className={style.card}
+          onClick={() => this.getProjectDetail(m._id)}
           actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
           extra={<span>创建者：{m.creator_name}</span>}
         >
@@ -86,14 +93,19 @@ export default class AllProjects extends Component {
   };
 
   render() {
-    const { my, participant } = this.state;
+    const { my, participant, detail } = this.state;
     return (
       <div className={style.cardContinerWarp}>
         <h3>我创建的项目</h3>
         <div className={style.cardContent}>{this.myProjects(my)}</div>
         <h3>我参与的项目</h3>
         <div className={style.cardContent}>{this.participantProjects(participant)}</div>
+        {/* <div>
+          <Detail detail={detail}/>
+        </div> */}
       </div>
     );
   }
 }
+
+export default connect(state => ({}))(AllProjects);

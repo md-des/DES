@@ -15,7 +15,7 @@ const createProject = ({ params }) => {
 };
 const getProjectsDetail = ({ params }) => {
   return ajax({
-    url: "api/groups/getPost",
+    url: "api/groups/detail",
     method: "get",
     params
   });
