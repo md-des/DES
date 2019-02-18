@@ -4,5 +4,7 @@
 
 ![eg](./image/eg.jpeg)
 
+* Module diagram:
+![eg](./image/DES.png)
 
 
