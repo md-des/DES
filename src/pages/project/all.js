@@ -65,9 +65,9 @@ class AllProjects extends Component {
           onClick={() => this.getProjectDetail(m._id)}
           extra={<span>创建者：{m.creator_name}</span>}
         >
-          <p>成员：{m.members.length === 0 && '暂无'}</p>
+          <p className={style.p}>成员：{m.members.length === 0 && '暂无'}</p>
           {m.members.map((p, idx) => {
-            return <p key={idx}>{p.name}</p>;
+            return <p className={style.p} key={idx}>{p.name}</p>;
           })}
         </Card>
       );
@@ -84,9 +84,9 @@ class AllProjects extends Component {
           actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
           extra={<span>创建者：{m.creator_name}</span>}
         >
-          <p>成员：{m.members.length === 0 && '暂无'}</p>
+          <p className={style.p}>成员：{m.members.length === 0 && '暂无'}</p>
           {m.members.map((p, idx) => {
-            return <p key={idx}>{p.name}</p>;
+            return <p className={style.p} key={idx}>{p.name}</p>;
           })}
         </Card>
       );

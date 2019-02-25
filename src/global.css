@@ -9,3 +9,9 @@ body {
 .stackedit-iframe-container {
   margin: 0 !important;
 }
+
+.ant-card-actions {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
