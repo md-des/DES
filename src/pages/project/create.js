@@ -40,7 +40,7 @@ class Create extends Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { data = [], value, fetching } = this.state;
+    const { data = [], fetching } = this.state;
     const { visible, closeModel } = this.props;
     return (
       <Modal title="创建书架" visible={visible} onOk={this.handleSubmit} onCancel={closeModel}>
@@ -62,7 +62,6 @@ class Create extends Component {
               <Select
                 mode="multiple"
                 labelInValue
-                value={value}
                 placeholder="search to select users"
                 notFoundContent={fetching ? <Spin size="small" /> : null}
                 filterOption={false}
