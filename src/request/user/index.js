@@ -13,7 +13,15 @@ const signup = ({ params }) => {
     data: params
   });
 };
+const search = ({ params }) => {
+  return ajax({
+    url: "api/signup/search",
+    method: "get",
+    params
+  });
+};
 export default {
   loginIn,
-  signup
+  signup,
+  search
 };
