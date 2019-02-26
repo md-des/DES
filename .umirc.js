@@ -2,10 +2,7 @@ var path = require('path')
 export default {
   treeShaking: true,
   define: {
-    // "process.env.host": '140.143.90.177',
-    // "process.env.port": 9000,
-    "process.env.host": 'localhost',
-    "process.env.port": 9000,
+   
   },
   plugins: [
     [
@@ -24,7 +21,7 @@ export default {
   ],
   proxy: {
     "/api": {
-      "target": "http://127.0.0.1:3060",
+      "target": "http://localhost:3060",
       "changeOrigin": true,
       "pathRewrite": { "^/api" : "" }
     }

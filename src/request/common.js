@@ -3,7 +3,7 @@ import {message} from 'antd';
 import router from 'umi/router';
 export default function(opt) {
   if (opt) {
-    opt.url = "http://" + process.env.host + ':' + process.env.port + "/" + opt.url;
+    opt.url = window.location.origin + '/' + opt.url;
     return axios(opt).then((res) => {
       if (res && res.data && res.data.code === 2000) {
         message.error(res.data.msg)

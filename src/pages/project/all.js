@@ -69,6 +69,7 @@ class AllProjects extends Component {
           {m.members.map((p, idx) => {
             return <p className={style.p} key={idx}>{p.name}</p>;
           })}
+          <p style={{margin: '0 5px'}}>文章数：{m.posts.length} 篇</p>
         </Card>
       );
     });

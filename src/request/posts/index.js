@@ -27,9 +27,17 @@ const updatePost = ({ params }) => {
     data: params
   });
 };
+const search = ({ params }) => {
+  return ajax({
+    url: "api/posts/search",
+    method: "get",
+    params
+  });
+};
 export default {
   getList,
   createPost,
   getPostDetail,
-  updatePost
+  updatePost,
+  search
 };
