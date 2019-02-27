@@ -44,22 +44,16 @@ export default class NewPost extends Component {
     return (
       <div
         style={{
-          width: width || '100%',
-          height: '90px',
-          lineHeight: '90px',
-          marginLeft: '-24px',
-          marginTop: '-24px',
-          background: 'rgb(44, 44, 44)',
-          padding: '24px 10px',
-          maxWidth: '1280px'
+          width: width || '100%'
         }}
       >
         <div
           style={{
             display: 'flex',
-            height: '32px',
+            height: '52px',
             lineHeight: '32px',
-            maxWidth: '1280px',
+            padding: '10px',
+            background: 'rgb(44, 44, 44)',
           }}
         >
           <div style={{ width: '60px', color: '#fff' }}>标题：</div>
