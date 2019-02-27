@@ -81,6 +81,7 @@ class Create extends Component {
               />
             )}
           </Form.Item>
+          
           <Form.Item>
             {getFieldDecorator('members', {
               rules: [{ required: true, message: 'Please input members!' }],
