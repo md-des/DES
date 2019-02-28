@@ -99,7 +99,7 @@ export default class MyDoc extends Component {
     }
     confirm({
       title: '确定删除吗?',
-      content: '删除后数据将无法找回',
+      content: '',
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
