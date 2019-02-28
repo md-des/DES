@@ -86,7 +86,6 @@ export default class MyDoc extends Component {
       });
   };
   onMenuClick = ({ item, key, keyPath }) => {
-    console.log({ item, key, keyPath }, '{ item, key, keyPath }');
     if (key === '3') {
       this.delete();
     }
