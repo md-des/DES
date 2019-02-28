@@ -27,6 +27,13 @@ const updatePost = ({ params }) => {
     data: params
   });
 };
+const deletePost = ({ params }) => {
+  return ajax({
+    url: "api/posts/remove",
+    method: "post",
+    data: params
+  });
+};
 const search = ({ params }) => {
   return ajax({
     url: "api/posts/search",
@@ -39,5 +46,6 @@ export default {
   createPost,
   getPostDetail,
   updatePost,
+  deletePost,
   search
 };

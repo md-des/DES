@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { List, Button, Input, message } from 'antd';
+import { List, Button, Input, message, Icon, Dropdown, Menu, Modal } from 'antd';
 import { posts } from 'request';
 import EditorOverview from 'components/EditorOverview';
 import Editor from 'components/Editor';
+const confirm = Modal.confirm;
 export default class MyDoc extends Component {
   state = {};
   componentDidMount() {
@@ -11,20 +12,24 @@ export default class MyDoc extends Component {
   getPostsList = () => {
     const userId = JSON.parse(localStorage.getItem('user'))._id;
     posts
-    .getList({
-      params: {
-        author: userId,
-      },
-    })
-    .then(req => {
-      if (req && req.data) {
-        this.setState({
-          list: req.data.docs,
-        });
-      }
+      .getList({
+        params: {
+          author: userId,
+        },
+      })
+      .then(req => {
+        if (req && req.data) {
+          this.setState({
+            list: req.data.docs,
+          });
+        }
+      });
+  };
+  getPostDetail = (id, idx) => {
+    this.setState({
+      currentHoverIndex: idx,
+      currentClickedPostId: id,
     });
-  }
-  getPostDetail = id => {
     posts
       .getPostDetail({
         params: {
@@ -67,27 +72,77 @@ export default class MyDoc extends Component {
       })
       .then(req => {
         if (req && req.code === 1000) {
-          const {data: {content, title}} = req;
+          const {
+            data: { content, title },
+          } = req;
           message.success('修改成功！');
           this.setState({
             edit: false,
             title,
-            content
+            content,
           });
           this.getPostsList();
         }
       });
   };
+  onMenuClick = ({ item, key, keyPath }) => {
+    console.log({ item, key, keyPath }, '{ item, key, keyPath }');
+    if (key === '3') {
+      this.delete();
+    }
+  };
+  delete = () => {
+    const {currentClickedPostId} = this.state;
+    const _this = this;
+    if (!currentClickedPostId) {
+      return;
+    }
+    confirm({
+      title: '确定删除吗?',
+      content: '删除后数据将无法找回',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        posts
+          .deletePost({
+            params: {
+              _id: currentClickedPostId,
+            },
+          })
+          .then(res => {
+            if (res.code === 1000) {
+              message.success('删除成功！');
+              _this.setState({
+
+                content: ''
+              });
+              _this.getPostsList();
+            }
+          });
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
   render() {
-    const {list, content, edit, title} = this.state;
+    const { list, content, edit, title, currentHoverIndex } = this.state;
     const iframeContainer = document.getElementsByClassName('stackedit-iframe-container')[0];
     let width;
     if (iframeContainer) {
       width = iframeContainer.offsetWidth;
     }
+    const menu = (
+      <Menu onClick={this.onMenuClick}>
+        <Menu.Item key="1">1st menu item</Menu.Item>
+        <Menu.Item key="2">2nd memu item</Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="3">删除</Menu.Item>
+      </Menu>
+    );
     return (
       <div>
-        {/* <h2>我的文档</h2> */}
         <div style={{ display: 'flex' }}>
           <div
             style={{
@@ -101,9 +156,20 @@ export default class MyDoc extends Component {
             <List
               itemLayout="horizontal"
               dataSource={list}
-              renderItem={item => (
-                <List.Item onClick={() => this.getPostDetail(item._id)}>
-                  <div>{item.title}</div>
+              renderItem={(item, idx) => (
+                <List.Item>
+                  <div style={{ width: '150px' }} onClick={() => this.getPostDetail(item._id, idx)}>
+                    {item.title}
+                  </div>
+                  <Dropdown overlay={menu} trigger={['click']}>
+                    <Icon
+                      type="setting"
+                      style={{
+                        display: currentHoverIndex === idx ? 'block' : 'none',
+                        lineHeight: '20px',
+                      }}
+                    />
+                  </Dropdown>
                 </List.Item>
               )}
             />
@@ -114,8 +180,15 @@ export default class MyDoc extends Component {
               {content && <EditorOverview content={content} />}
             </div>
           )}
-          {edit && (
-            <div style={{ width: width || '100%', height: '100%', backgroundColor: 'rgb(44, 44, 44)', maxWidth: '1280px' }}>
+          {edit && content && (
+            <div
+              style={{
+                width: width || '100%',
+                height: '100%',
+                backgroundColor: 'rgb(44, 44, 44)',
+                maxWidth: '1280px',
+              }}
+            >
               <div
                 style={{ display: 'flex', height: '32px', lineHeight: '32px', margin: '30px 10px' }}
               >
