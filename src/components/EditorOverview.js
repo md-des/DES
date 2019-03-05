@@ -30,7 +30,8 @@ export default class EditorOverview extends Component {
         {/* <textarea style={{ display: 'none' }} id="stackeditOverview" /> */}
         <div id="stackeditOverviewPanel" style={{ background: loading && 'rgba(0,0,0,0.05)' }} />
         {!content && (
-          <div style={{ width: '100%', maxWidth: '800px', textAlign: 'center' }}>
+          <div style={{width: '100%', maxWidth: '800px', textAlign: 'center'}}>
+            <p>暂无内容</p>
             <Icon type="read" style={{ fontSize: '50px' }} />
           </div>
         )}

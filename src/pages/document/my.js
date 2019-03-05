@@ -5,7 +5,9 @@ import EditorOverview from 'components/EditorOverview';
 import Editor from 'components/Editor';
 const confirm = Modal.confirm;
 export default class MyDoc extends Component {
-  state = {};
+  state = {
+    content: '',
+  };
   componentDidMount() {
     this.getPostsList();
   }
@@ -61,12 +63,12 @@ export default class MyDoc extends Component {
     this.setState({ title: val });
   };
   savePost = () => {
-    const { newContent, _id, title } = this.state;
+    const { newContent, _id, title, content } = this.state;
     posts
       .updatePost({
         params: {
           _id,
-          content: newContent,
+          content: typeof newContent == 'undefined' ? content : newContent,
           title,
         },
       })
@@ -91,7 +93,7 @@ export default class MyDoc extends Component {
     }
   };
   delete = () => {
-    const {currentClickedPostId} = this.state;
+    const { currentClickedPostId } = this.state;
     const _this = this;
     if (!currentClickedPostId) {
       return;
@@ -113,8 +115,7 @@ export default class MyDoc extends Component {
             if (res.code === 1000) {
               message.success('删除成功！');
               _this.setState({
-
-                content: ''
+                content: '',
               });
               _this.getPostsList();
             }
@@ -126,7 +127,7 @@ export default class MyDoc extends Component {
     });
   };
   render() {
-    const { list, content, edit, title, currentHoverIndex } = this.state;
+    const { list, content, edit, title, currentHoverIndex, currentClickedPostId } = this.state;
     const iframeContainer = document.getElementsByClassName('stackedit-iframe-container')[0];
     let width;
     if (iframeContainer) {
@@ -156,8 +157,8 @@ export default class MyDoc extends Component {
               itemLayout="horizontal"
               dataSource={list}
               renderItem={(item, idx) => (
-                <List.Item>
-                  <div style={{ width: '150px' }} onClick={() => this.getPostDetail(item._id, idx)}>
+                <List.Item style={{background: item._id === currentClickedPostId ? '#eee' : 'none'}}>
+                  <div style={{ width: '150px', paddingLeft: '10px' }} onClick={() => this.getPostDetail(item._id, idx)}>
                     {item.title}
                   </div>
                   <Dropdown overlay={menu} trigger={['click']}>
@@ -173,13 +174,18 @@ export default class MyDoc extends Component {
               )}
             />
           </div>
-          {!edit && (
+          {!edit && currentClickedPostId && (
             <div style={{ width: '100%', marginLeft: '40px', maxWidth: '1280px' }}>
-              {content && <Button onClick={this.edit}>编辑</Button>}
-              {content && <EditorOverview content={content} />}
+              <Button onClick={this.edit}>编辑</Button>
+              <EditorOverview content={content} />
             </div>
           )}
-          {edit && content && (
+          {!currentClickedPostId && (
+            <div style={{ width: '100%', marginLeft: '40px', maxWidth: '1280px' }}>
+              <p style={{textAlign: 'center', fontSize: '13px'}}>选择一篇文章打开</p>
+            </div>
+          )}
+          {edit && (
             <div
               style={{
                 width: width || '100%',

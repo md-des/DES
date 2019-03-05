@@ -139,7 +139,7 @@ class ProjectDetail extends Component {
             </div>
             <Editor
               getContent={this.getContent}
-              defaultValue={content}
+              value={content}
               style={{
                 top: '219px',
                 left: '448px',

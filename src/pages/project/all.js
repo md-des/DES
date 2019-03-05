@@ -7,7 +7,7 @@ import { connect } from 'dva';
 import Create from './create';
 import { record, Replayer } from 'rrweb';
 import rrwebPlayer from 'rrweb-player';
-import Prompt from 'components/Prompt.js'
+import Prompt from 'components/Prompt.js';
 const confirm = Modal.confirm;
 class AllProjects extends Component {
   state = {
@@ -73,7 +73,7 @@ class AllProjects extends Component {
         }
       });
   };
-  delete = (id) => {
+  delete = id => {
     const _this = this;
     if (!id) {
       return;
@@ -103,41 +103,52 @@ class AllProjects extends Component {
       },
     });
   };
-  rename = (id) => {
+  rename = id => {
     Prompt({
       title: '重命名',
       placeHolder: '请填写名称',
-      onOk: ({text}) => {
+      onOk: ({ text }) => {
         projects
-        .renameProject({
-          params: {
-            _id: id,
-            name: text
-          },
-        })
-        .then(res => {
-          if (res.code === 1000) {
-            message.success('操作成功！');
-            this.getProjectList();
-          }
-        });
-      }
-    })
-    
-  }
-  onMenuClick = ({item, key, keyPath}, id) => {
+          .renameProject({
+            params: {
+              _id: id,
+              name: text,
+            },
+          })
+          .then(res => {
+            if (res.code === 1000) {
+              message.success('操作成功！');
+              this.getProjectList();
+            }
+          });
+      },
+    });
+  };
+  onMenuClick = ({ item, key, keyPath }, id) => {
+    if (key === '0') {
+      this.delete(id);
+    }
     if (key === '1') {
       this.rename(id);
+    }
+    if (key === '2') {
+      this.delete(id);
     }
     if (key === '3') {
       this.delete(id);
     }
   };
-  menu = (id) => (
-    <Menu onClick={(params) => this.onMenuClick(params, id)}>
+  menu1 = id => (
+    <Menu onClick={params => this.onMenuClick(params, id)}>
       <Menu.Item key="1">重命名</Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3">删除</Menu.Item>
+      <Menu.Item key="0">删除</Menu.Item>
+    </Menu>
+  );
+  menu2 = id => (
+    <Menu onClick={params => this.onMenuClick(params, id)}>
+      <Menu.Item key="2">加入文章</Menu.Item>
+      <Menu.Item key="3">加入成员</Menu.Item>
     </Menu>
   );
   myProjects = my => {
@@ -145,14 +156,20 @@ class AllProjects extends Component {
       return (
         <Card
           key={m._id}
-          title={<span title={m.group_name} onClick={() => this.getProjectDetail(m._id)}>{m.group_name}</span>}
+          title={
+            <span title={m.group_name} onClick={() => this.getProjectDetail(m._id)}>
+              {m.group_name}
+            </span>
+          }
           className={style.card}
           hoverable={true}
           actions={[
-            <Dropdown overlay={() => this.menu(m._id)} trigger={['click']}>
+            <Dropdown overlay={() => this.menu1(m._id)} trigger={['click']}>
               <Icon type="setting" />
             </Dropdown>,
-            <Icon type="ellipsis" />,
+            <Dropdown overlay={() => this.menu2(m._id)} trigger={['click']}>
+              <Icon type="ellipsis" />
+            </Dropdown>,
           ]}
           extra={<span>创建者：{m.creator_name}</span>}
         >
@@ -175,6 +192,7 @@ class AllProjects extends Component {
         <Card
           title={m.group_name}
           key={m._id}
+          hoverable={true}
           className={style.card}
           onClick={() => this.getProjectDetail(m._id)}
           actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
