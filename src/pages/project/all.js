@@ -279,7 +279,6 @@ class AllProjects extends Component {
         </div>
 
         <h3>我参与的</h3>
-        {/* <Prompt></Prompt> */}
         <div className={style.cardContent}>{this.participantProjects(participant)}</div>
         <Create
           visible={this.state.visible}

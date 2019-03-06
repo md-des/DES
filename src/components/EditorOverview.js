@@ -23,11 +23,10 @@ export default class EditorOverview extends Component {
     const { loading, htmlcontent = '' } = this.state;
     const { content } = this.props;
     return (
-      <div>
+      <div id='editorOverview'>
         <div style={{ width: '100%', maxWidth: '800px', textAlign: 'center' }}>
           <Spin spinning={loading === true} />
         </div>
-        {/* <textarea style={{ display: 'none' }} id="stackeditOverview" /> */}
         <div id="stackeditOverviewPanel" style={{ background: loading && 'rgba(0,0,0,0.05)' }} />
         {!content && (
           <div style={{width: '100%', maxWidth: '800px', textAlign: 'center'}}>

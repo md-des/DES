@@ -157,8 +157,16 @@ export default class MyDoc extends Component {
               itemLayout="horizontal"
               dataSource={list}
               renderItem={(item, idx) => (
-                <List.Item style={{background: item._id === currentClickedPostId ? '#eee' : 'none'}}>
-                  <div style={{ width: '150px', paddingLeft: '10px' }} onClick={() => this.getPostDetail(item._id, idx)}>
+                <List.Item
+                  style={{
+                    background: item._id === currentClickedPostId ? '#eee' : 'none',
+                    borderLeft: item._id === currentClickedPostId ? '2px solid #408ff7' : '2px solid #fff',
+                  }}
+                >
+                  <div
+                    style={{ width: '150px', paddingLeft: '10px' }}
+                    onClick={() => this.getPostDetail(item._id, idx)}
+                  >
                     {item.title}
                   </div>
                   <Dropdown overlay={menu} trigger={['click']}>
@@ -182,7 +190,7 @@ export default class MyDoc extends Component {
           )}
           {!currentClickedPostId && (
             <div style={{ width: '100%', marginLeft: '40px', maxWidth: '1280px' }}>
-              <p style={{textAlign: 'center', fontSize: '13px'}}>选择一篇文章打开</p>
+              <p style={{ textAlign: 'center', fontSize: '13px' }}>选择一篇文章打开</p>
             </div>
           )}
           {edit && (
