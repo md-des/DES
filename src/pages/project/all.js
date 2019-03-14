@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Icon, message, Dropdown, Menu, Modal } from 'antd';
-import { projects } from 'request';
+import { projects, user as userAjax, posts as postAjax } from 'request';
 import style from './index.less';
 import router from 'umi/router';
 import { connect } from 'dva';
@@ -8,6 +8,7 @@ import Create from './create';
 import { record, Replayer } from 'rrweb';
 import rrwebPlayer from 'rrweb-player';
 import Prompt from 'components/Prompt.js';
+import SettingModal from './SettingModal';
 const confirm = Modal.confirm;
 class AllProjects extends Component {
   state = {
@@ -132,11 +133,22 @@ class AllProjects extends Component {
       this.rename(id);
     }
     if (key === '2') {
-      this.delete(id);
+      this.openSettingModal('addPostVisiable');
     }
     if (key === '3') {
-      this.delete(id);
+      this.openSettingModal('addMemberVisiable');
     }
+    this.setState({currentProjectId: id})
+  };
+  openSettingModal = key => {
+    this.setState({
+      [key]: true,
+    });
+  };
+  closeSettingModal = key => {
+    this.setState({
+      [key]: false,
+    });
   };
   menu1 = id => (
     <Menu onClick={params => this.onMenuClick(params, id)}>
@@ -248,8 +260,28 @@ class AllProjects extends Component {
     });
     // player.destroy()
   };
+  onAddPostSubmit = ({searchData}) => {
+    this.updateProject('posts', searchData)
+    this.closeSettingModal('addPostVisiable')
+  }
+  onAddMemberSubmit = ({searchData}) => {
+    this.updateProject('members', searchData)
+    this.closeSettingModal('addMemberVisiable')
+  }
+  updateProject = (key, searchData) => {
+    const {currentProjectId} = this.state;
+    projects.updateProject({
+      params: {
+        _id: currentProjectId,
+        [key]: searchData.map(i => i.key)
+      }
+    }).then(res => {
+      message.success('添加成功！');
+    })
+  }
   render() {
-    const { my, participant, detail } = this.state;
+    const { my, participant, detail, addPostVisiable, addMemberVisiable } = this.state;
+    const userId = JSON.parse(localStorage.getItem('user'))._id;
     return (
       <div className={style.cardContinerWarp}>
         <h3>我创建的</h3>
@@ -284,6 +316,23 @@ class AllProjects extends Component {
           visible={this.state.visible}
           createProject={this.createProject}
           onCancel={this.closeModel}
+        />
+        <SettingModal
+          title={'添加文章'}
+          visiable={addPostVisiable}
+          request={postAjax.search}
+          params={{author: userId}}
+          searchKey={'title'}
+          submit={this.onAddPostSubmit}
+          onCancel={() => this.closeSettingModal('addPostVisiable')}
+        />
+        <SettingModal
+          title={'添加成员'}
+          visiable={addMemberVisiable}
+          request={userAjax.search}
+          searchKey={'name'}
+          submit={this.onAddMemberSubmit}
+          onCancel={() => this.closeSettingModal('addMemberVisiable')}
         />
       </div>
     );

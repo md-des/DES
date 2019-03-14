@@ -184,7 +184,7 @@ export default class MyDoc extends Component {
           </div>
           {!edit && currentClickedPostId && (
             <div style={{ width: '100%', marginLeft: '40px', maxWidth: '1280px' }}>
-              <Button onClick={this.edit}>编辑</Button>
+              <Button onClick={this.edit} style={{margin: '10px 0'}}>编辑</Button>
               <EditorOverview content={content} />
             </div>
           )}

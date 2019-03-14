@@ -34,10 +34,18 @@ const renameProject = ({ params }) => {
     data: params
   });
 };
+const updateProject = ({ params }) => {
+  return ajax({
+    url: "api/groups/update",
+    method: "post",
+    data: params
+  });
+};
 export default {
   getProjectsList,
   createProject,
   getProjectsDetail,
   deleteProject,
-  renameProject
+  renameProject,
+  updateProject
 };
