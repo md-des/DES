@@ -115,7 +115,7 @@ class ProjectDetail extends Component {
         </div>
         {!edit && (
           <div style={{ width: '100%', marginLeft: '40px', maxWidth: '1280px' }}>
-            {content && <Button onClick={this.edit}>编辑</Button>}
+            {content && <Button onClick={this.edit} style={{margin: '10px 0'}}>编辑</Button>}
             {content && <EditorOverview content={content} />}
           </div>
         )}

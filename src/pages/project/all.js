@@ -277,6 +277,7 @@ class AllProjects extends Component {
       }
     }).then(res => {
       message.success('添加成功！');
+      this.getProjectList()
     })
   }
   render() {
