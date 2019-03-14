@@ -16,7 +16,7 @@
     "react-dnd": "^7.0.2",
     "react-dnd-html5-backend": "^7.0.2",
     "react-dom": "^16.7.0",
-    "react-markdown-editor-lite": "^0.3.7",
+    "react-markdown-editor-lite": "0.3.9",
     "rrweb": "^0.7.9",
     "rrweb-player": "^0.3.9"
   },
