@@ -2,14 +2,17 @@ import Link from 'umi/link';
 import router from 'umi/router';
 import React, { Component } from 'react';
 import style from './login.less';
-import {Form, Icon, Input, Button, Checkbox, message} from 'antd';
+import {Form, Icon, Input, Button, Checkbox, message, Avatar} from 'antd';
 import kit from 'utils/kit.js'
-import { user } from 'request';
+import {user} from 'request';
+import { connect } from 'dva';
 const {encryptDES} = kit;
-const img = require('static/images/logo.jpg');
+
+const img = require('static/images/md.jpg');
 class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
+    const {dispatch} = this.props;
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
@@ -26,19 +29,25 @@ class Login extends Component {
         if (req && req.code === 1000) {
           const {user} = req.data;
           message.success('登录成功！');
-          localStorage.setItem('user', JSON.stringify(user));
+          dispatch({
+            type: 'userInfo/updateUserInfo',
+            payload: {
+              user
+            }
+          });
           router.push('/document/my');
         }
       })
     });
   }
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const {getFieldDecorator} = this.props.form;
+    const {user = {}} = this.props;
     return (
       <div>
         <div className={style.loginPanel}>
           <div className={style.logoContainer}>
-            <img src={img} alt="" className={style.logo}/>
+            <Avatar size={80} icon="user" src={user.avatar && '/api/' + user.avatar} />
           </div>
           <Form  className={style.form + ' login-form'}>
             <Form.Item>
@@ -80,4 +89,7 @@ class Login extends Component {
   }
 }
 const LoginForm = Form.create({name: 'normal_login'})(Login);
-export default LoginForm;
+export default connect(state => ({
+  detail: state.projects_all.detail,
+  user: state.userInfo.user
+}))(LoginForm);

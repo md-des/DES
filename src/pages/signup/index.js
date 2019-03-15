@@ -6,7 +6,7 @@ import {Form, Icon, Input, Button, message} from 'antd';
 import kit from 'utils/kit.js'
 import { user } from 'request';
 const {encryptDES} = kit;
-const img = require('static/images/logo.jpg');
+const img = require('static/images/md.jpg');
 class Signup extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
