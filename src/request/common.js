@@ -3,7 +3,6 @@ import {message} from 'antd';
 import router from 'umi/router';
 export default function(opt) {
   if (opt) {
-    opt.url = window.location.origin + '/' + opt.url;
     return axios(opt).then((res) => {
       if (res && res.data && res.data.code === 2000) {
         message.error(res.data.msg)
@@ -16,7 +15,12 @@ export default function(opt) {
       }
       return res.data;
     }).catch(err => {
-      console.error('network error!', err)
+      if (err.response) {
+        const {status, statusText} = err.response;
+        message.error(status + '  ' + statusText);
+      } else {
+        console.error('network error!', err);
+      }
     })
   }
 }
