@@ -2,11 +2,10 @@ import Link from 'umi/link';
 import router from 'umi/router';
 import React, { Component } from 'react';
 import style from './signup.less';
-import {Form, Icon, Input, Button, message} from 'antd';
+import {Form, Icon, Input, Button, message, Avatar} from 'antd';
 import kit from 'utils/kit.js'
 import { user } from 'request';
 const {encryptDES} = kit;
-const img = require('static/images/md.jpg');
 class Signup extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
@@ -14,7 +13,6 @@ class Signup extends Component {
       if (!err) {
         console.log('Received values of form: ', values);
       }
-      console.log(values, 'values')
       const {userName, password} = values;
       const key = 'DES';
       const pass = encryptDES(password, key);
@@ -45,7 +43,7 @@ class Signup extends Component {
       <div>
         <div className={style.loginPanel}>
           <div className={style.logoContainer}>
-            <img src={img} alt="" className={style.logo}/>
+            <Avatar size={80} icon="user" />
           </div>
           <Form onSubmit={this.handleSubmit} className={style.form + ' login-form'}>
             <Form.Item>

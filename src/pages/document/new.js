@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Editor from 'components/Editor';
 import { Button, Input, message } from 'antd';
 import {posts} from 'request';
-import router from 'umi/router';
 export default class NewPost extends Component {
   state = {};
   setTitle = e => {
@@ -14,20 +13,24 @@ export default class NewPost extends Component {
   savePost = () => {
     const { title, content } = this.state;
     const userId = JSON.parse(localStorage.getItem('user'))._id;
-    posts
-      .createPost({
-        params: {
-          author: userId,
-          title,
-          content,
-        },
-      })
-      .then(req => {
-        if (req.code === 1000) {
-          message.success('新建成功！');
-          // router.push('/document/my')
-        }
-      });
+    if (!title) {
+      message.warning('请输入文章标题')
+    } else {
+      posts
+        .createPost({
+          params: {
+            author: userId,
+            title,
+            content,
+          },
+        })
+        .then(req => {
+          if (req.code === 1000) {
+            message.success('新建成功！');
+            // router.push('/document/my')
+          }
+        });
+    }
   };
   getContent = content => {
     this.setState({

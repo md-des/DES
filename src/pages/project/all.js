@@ -5,8 +5,6 @@ import style from './index.less';
 import router from 'umi/router';
 import { connect } from 'dva';
 import Create from './create';
-import { record, Replayer } from 'rrweb';
-import rrwebPlayer from 'rrweb-player';
 import Prompt from 'components/Prompt.js';
 import SettingModal from './SettingModal';
 const confirm = Modal.confirm;
@@ -18,21 +16,6 @@ class AllProjects extends Component {
   componentDidMount() {
     this.getProjectList();
   }
-  record = () => {
-    let events = [];
-    let stopFn = record({
-      emit(event) {
-        // 将 event 存入 events 数组中
-        // if (events.length > 10) {
-        //   // 当事件数量大于 100 时停止录制
-        //   stopFn();
-        // }
-        events.push(event);
-      },
-    });
-    this.stopFn = stopFn;
-    this.events = events;
-  };
   getProjectList = () => {
     const userId = JSON.parse(localStorage.getItem('user'))._id;
     projects
@@ -125,7 +108,7 @@ class AllProjects extends Component {
       },
     });
   };
-  onMenuClick = ({ item, key, keyPath }, id) => {
+  onMenuClick = ({ key }, id) => {
     if (key === '0') {
       this.delete(id);
     }
@@ -249,17 +232,7 @@ class AllProjects extends Component {
       visible: false,
     });
   };
-  replay = () => {
-    const { events = [], stopFn } = this;
-    stopFn();
-    const player = new rrwebPlayer({
-      target: document.body, // 可以自定义 DOM 元素
-      data: {
-        events,
-      },
-    });
-    // player.destroy()
-  };
+
   onAddPostSubmit = ({searchData}) => {
     this.updateProject('posts', searchData)
     this.closeSettingModal('addPostVisiable')
@@ -281,13 +254,11 @@ class AllProjects extends Component {
     })
   }
   render() {
-    const { my, participant, detail, addPostVisiable, addMemberVisiable } = this.state;
+    const { my, participant, addPostVisiable, addMemberVisiable } = this.state;
     const userId = JSON.parse(localStorage.getItem('user'))._id;
     return (
       <div className={style.cardContinerWarp}>
         <h3>我创建的</h3>
-        {/* <Button onClick={this.record}>record</Button>
-        <Button onClick={this.replay}>replay</Button> */}
         <div className={style.cardContent}>
           {this.myProjects(my)}
           <div
@@ -339,5 +310,4 @@ class AllProjects extends Component {
     );
   }
 }
-
 export default connect(state => ({}))(AllProjects);

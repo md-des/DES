@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { List, Button, Input, message, Divider, Avatar, Upload, Icon } from 'antd';
-import { posts } from 'request';
-import EditorOverview from 'components/EditorOverview';
-import Editor from 'components/Editor';
+import { Button, Input, message, Divider, Avatar, Upload, Icon } from 'antd';
 import { connect } from 'dva';
 class UserSetting extends Component {
   state = {}

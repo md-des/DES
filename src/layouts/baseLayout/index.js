@@ -19,7 +19,7 @@ class BseicLayout extends Component {
     }
   }
   render() {
-    const {location: {pathname} = {}, user = {}} = this.props;
+    const {user = {}} = this.props;
     const imageUrl = user.avatar
     return (
       <Layout className={style.baseLayout}>

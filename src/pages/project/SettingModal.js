@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Select, Spin, Modal } from 'antd';
-import { user, posts as postAjax } from 'request';
+import { Form, Select, Spin, Modal } from 'antd';
 const Option = Select.Option;
 class SettingModal extends Component {
   state = {}
@@ -9,14 +8,13 @@ class SettingModal extends Component {
   }
   handleSubmit = () => {}
   fetchData = (val) => {
-    const {request, id, params, searchKey} = this.props;
+    const {request, params, searchKey} = this.props;
     request({
       params: {
         ...params,
         [searchKey]: val
       }
     }).then(res => {
-      console.log(res, 'ressss')
       const {data, code} = res;
       if (code === 1000) {
         this.setState({
@@ -39,7 +37,7 @@ class SettingModal extends Component {
     
   };
   render() {
-    const {title, visiable, onOk, onCancel, form: {getFieldDecorator}, searchKey} = this.props;
+    const {title, visiable, onCancel, form: {getFieldDecorator}, searchKey} = this.props;
     const {data = [], fetching} = this.state;
     return (
       <Modal

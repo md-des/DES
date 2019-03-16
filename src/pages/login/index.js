@@ -7,8 +7,6 @@ import kit from 'utils/kit.js'
 import {user} from 'request';
 import { connect } from 'dva';
 const {encryptDES} = kit;
-
-const img = require('static/images/md.jpg');
 class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
@@ -42,7 +40,7 @@ class Login extends Component {
   }
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {user = {}} = this.props;
+    const {user = JSON.parse(localStorage.getItem('user')) || {}} = this.props;
     return (
       <div>
         <div className={style.loginPanel}>
