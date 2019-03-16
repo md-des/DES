@@ -190,7 +190,7 @@ class AllProjects extends Component {
           hoverable={true}
           className={style.card}
           onClick={() => this.getProjectDetail(m._id)}
-          actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+          // actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
           extra={<span>创建者：{m.creator_name}</span>}
         >
           <p className={style.p}>成员：{m.members.length === 0 && '暂无'}</p>
