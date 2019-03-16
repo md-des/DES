@@ -20,8 +20,16 @@ const search = ({ params }) => {
     params
   });
 };
+const update = ({ params }) => {
+  return ajax({
+    url: "/api/signup/update",
+    method: "post",
+    data: params
+  });
+};
 export default {
   loginIn,
   signup,
-  search
+  search,
+  update
 };

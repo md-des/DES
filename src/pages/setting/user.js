@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { Button, Input, message, Divider, Avatar, Upload, Icon } from 'antd';
-import { connect } from 'dva';
+import {connect} from 'dva';
+import {user as userAjax} from 'request';
 class UserSetting extends Component {
   state = {}
   componentDidMount() {
-    const {user = {}} = this.props;
-    const imageUrl = user.avatar
-    this.setState({
-      imageUrl
-    })
+    this.setValue(this.props)
   }
   componentWillReceiveProps(nextProps) {
-    const {user = {}} = nextProps;
-    const imageUrl = user.avatar
+    this.setValue(nextProps)
+  }
+  setValue = (props) => {
+    const {user = {}} = props;
+    const imageUrl = user.avatar;
+    const userName = user.name;
     this.setState({
-      imageUrl
+      imageUrl,
+      userName
     })
   }
   getBase64 = (img, callback) => {
@@ -44,18 +46,41 @@ class UserSetting extends Component {
           }
         });
       }
-      // Get this url from response in real world.
-      // this.setState({
-      //   imageUrl: 
-      // })
       // this.getBase64(info.file.originFileObj, imageUrl => this.setState({
       //   imageUrl,
       //   loading: false,
       // }));
     }
   }
+  changeName = (e) => {
+    const name = e.target.value;
+    this.setState({
+      userName: name
+    })
+  }
+  onSubmit = () => {
+    const {userName} = this.state;
+    const {user = {}, dispatch} = this.props;
+    userAjax.update({
+      params: {
+        _id: user._id,
+        name: userName
+      }
+    }).then(r => {
+      if (r.code === 1000) {
+        message.success('修改成功');
+        user.name = r.data.name;
+        dispatch({
+          type: 'userInfo/updateUserInfo',
+          payload: {
+            user
+          }
+        })
+      }
+    })
+  }
   render() {
-    const {imageUrl} = this.state;
+    const {imageUrl, userName} = this.state;
     const userId = JSON.parse(localStorage.getItem('user'))._id;
     const props = {
       name: 'file',
@@ -79,9 +104,9 @@ class UserSetting extends Component {
           </Button>
         </Upload>
         <Divider orientation="left">用户名</Divider>
-        <Input style={{ width: '200px' }} />
+        <Input style={{ width: '200px' }}  value={userName} onChange={this.changeName}/>
         <div style={{ height: '20px' }} />
-        <Button type="primary">保存</Button>
+        <Button type="primary" onClick={this.onSubmit}>保存</Button>
       </div>
     );
   }

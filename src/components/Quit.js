@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import { Menu, Dropdown, Icon } from 'antd';
 import router from 'umi/router';
-export default class extends Component {
+import { connect } from 'dva';
+class Quit extends Component {
   logout = () => {
     localStorage.removeItem('user');
     router.push('/login');
   };
   render() {
+    const {user = {}} = this.props;
     const menu = () => {
       return (
         <Menu>
@@ -25,8 +27,11 @@ export default class extends Component {
     };
     return (
       <Dropdown overlay={menu}>
-        <span style={{ color: '#fff', cursor: 'pointer' }}>zlx</span>
+        <span style={{color: '#fff', cursor: 'pointer'}}>{user.name}</span>
       </Dropdown>
     );
   }
 }
+export default connect(state => ({
+  user: state.userInfo.user
+}))(Quit);

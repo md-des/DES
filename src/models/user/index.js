@@ -12,7 +12,7 @@ export default {
       localStorage.setItem('user', JSON.stringify(user));
       return {
         ...state,
-        ...payload,
+        user: JSON.parse(JSON.stringify(user)),
       }
     }
   },
