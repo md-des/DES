@@ -9,8 +9,8 @@ class Create extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        values.members = values.members.map(i => i.key);
-        values.posts = values.posts.map(i => i.key);
+        values.members = values.members ? values.members.map(i => i.key) : [];
+        values.posts = values.posts ? values.posts.map(i => i.key): [];
         createProject(values);
       }
     });
@@ -85,7 +85,7 @@ class Create extends Component {
           
           <Form.Item>
             {getFieldDecorator('members', {
-              rules: [{ required: true, message: 'Please input members!' }],
+              rules: [{ required: false, message: 'Please input members!' }],
             })(
               <Select
                 mode="multiple"
@@ -105,7 +105,7 @@ class Create extends Component {
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('posts', {
-              rules: [{ required: true, message: '搜索以添加文章!' }],
+              rules: [{ required: false, message: '搜索以添加文章!' }],
             })(
               <Select
                 mode="multiple"
