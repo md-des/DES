@@ -12,12 +12,12 @@ class Quit extends Component {
     const menu = () => {
       return (
         <Menu>
-          <Menu.Item>
-            <Icon type="user" /> 用户
+          <Menu.Item onClick={() => {router.push('/setting/user')}}>
+            <Icon type="user"/> 用户
           </Menu.Item>
-          <Menu.Item>
+          {/* <Menu.Item>
             <Icon type="setting" /> 设置
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Divider />
           <Menu.Item onClick={this.logout}>
             <Icon type="poweroff" /> 退出登录

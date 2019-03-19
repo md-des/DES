@@ -11,10 +11,10 @@ export const sideList = [
         name: '我的文档',
         path: '/document/my',
       },
-      {
-        name: '草稿',
-        path: '/document/draft',
-      },
+      // {
+      //   name: '草稿',
+      //   path: '/document/draft',
+      // },
     ],
   },
   {

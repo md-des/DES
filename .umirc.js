@@ -11,7 +11,7 @@ export default {
         antd: true,
         dva: true,
         dynamicImport: false,
-        title: 'myapp',
+        title: 'DES',
         dll: false,
         routes: {
           exclude: [/components\//],

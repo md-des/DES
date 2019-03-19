@@ -34,8 +34,8 @@ class BseicLayout extends Component {
               defaultSelectedKeys={['3']}
               style={{ lineHeight: '64px' }}
             >
-              <Menu.Item key="1">
-                <Icon type="github" />
+              <Menu.Item key="1" onClick={() => {window.open('https://github.com/md-des/DES')}}>
+                <Icon type="github"/>
               </Menu.Item>
               <Menu.Item key="2">
                 <Icon type="bell" />

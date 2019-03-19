@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
-import { Spin, Icon, BackTop } from 'antd';
+import {Spin, Icon, BackTop} from 'antd';
+import hljs from 'highlight.js'
+import 'highlight.js/styles/github.css'
 var MarkdownIt = require('markdown-it');
-var md = new MarkdownIt();
+var md = new MarkdownIt({
+  highlight: function(str, lang = 'javascript') {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(lang, str).value;
+      } catch (__) {}
+    }
+  }
+});
 export default class EditorOverview extends Component {
   state = {};
   componentDidMount() {
@@ -30,7 +40,7 @@ export default class EditorOverview extends Component {
           overflow: 'auto',
           borderBottom: '1px solid #d8d8d8',
           borderTop: '1px solid #d8d8d8',
-          boxShadow: '0px 8px 10px -10px #d8d8d8'
+          boxShadow: '0px 8px 10px -10px #d8d8d8',
         }}
       >
         <BackTop target={() => document.getElementById('editorOverview')} />

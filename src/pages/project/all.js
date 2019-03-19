@@ -21,7 +21,7 @@ class AllProjects extends Component {
     projects
       .getProjectsList({
         params: {
-          creator_id: userId,
+          creator: userId,
         },
       })
       .then(req => {
@@ -166,7 +166,7 @@ class AllProjects extends Component {
               <Icon type="ellipsis" />
             </Dropdown>,
           ]}
-          extra={<span>创建者：{m.creator_name}</span>}
+          extra={<span>创建者：{m.creator.name}</span>}
         >
           <p className={style.p}>成员：{m.members.length === 0 && '暂无'}</p>
           {m.members.map((p, idx) => {
@@ -191,7 +191,7 @@ class AllProjects extends Component {
           className={style.card}
           onClick={() => this.getProjectDetail(m._id)}
           // actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
-          extra={<span>创建者：{m.creator_name}</span>}
+          extra={<span>创建者：{m.creator.name}</span>}
         >
           <p className={style.p}>成员：{m.members.length === 0 && '暂无'}</p>
           {m.members.map((p, idx) => {
@@ -201,6 +201,7 @@ class AllProjects extends Component {
               </p>
             );
           })}
+          <p style={{ margin: '0 5px' }}>文章数：{m.posts.length} 篇</p>
         </Card>
       );
     });
@@ -210,7 +211,7 @@ class AllProjects extends Component {
     projects
       .createProject({
         params: {
-          creator_id: userId,
+          creator: userId,
           ...values,
         },
       })
